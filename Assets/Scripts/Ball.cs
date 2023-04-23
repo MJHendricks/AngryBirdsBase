@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Ball : MonoBehaviour
 {
     private bool isPressed = false;
     public Rigidbody2D rb;
     public Rigidbody2D hook;
+
+    public GameObject nextBall;
 
     
     void Update()
@@ -46,5 +49,19 @@ public class Ball : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         GetComponent<SpringJoint2D>().enabled = false;
         this.enabled = false;
+
+        yield return new WaitForSeconds(2f);
+
+        if (nextBall != null )
+        {
+            nextBall.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Game Over");
+            Enemy.EnemiesAlive = 0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
     }
 }

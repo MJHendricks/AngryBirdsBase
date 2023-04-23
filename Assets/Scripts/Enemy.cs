@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject deathfx;
     public float health = 4f;
+    public static int EnemiesAlive = 0;
+
+    void Start()
+    {
+        EnemiesAlive++;
+    }
 
     void Update()
     {
@@ -22,6 +29,12 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        Instantiate(deathfx, transform.position, Quaternion.identity);
+        EnemiesAlive--;
+        if (EnemiesAlive <= 0)
+        {
+            Debug.Log("Level Complete");
+        }
         Destroy(gameObject);
 
     }
